@@ -1,0 +1,12 @@
+groups:
+  - admins
+  - data-engineers
+  - data-scientists
+  - analysts
+  - read-only
+
+users:
+  - email: alice@example.com
+    groups: [data-engineers]
+  - email: bob@example.com
+    groups: [analysts]

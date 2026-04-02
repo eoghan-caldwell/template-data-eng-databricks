@@ -1,0 +1,24 @@
+instance_pools:
+  - name: default_pool
+    node_type: Standard_DS3_v2
+    min_idle: 0
+    max_capacity: 10
+
+cluster_policies:
+  - name: standard_policy
+    definition: |
+      {
+        "spark_conf.spark.databricks.cluster.profile": {
+          "type": "fixed",
+          "value": "singleNode"
+        }
+      }
+
+clusters:
+  - name: dev-all-purpose
+    spark_version: "13.3.x-scala2.12"
+    node_type: Standard_DS3_v2
+    autoscale:
+      min_workers: 1
+      max_workers: 3
+    policy_id: standard_policy

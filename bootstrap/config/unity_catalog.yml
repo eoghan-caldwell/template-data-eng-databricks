@@ -1,0 +1,30 @@
+metastore:
+  name: primary_metastore
+  storage_root: abfss://uc-root@storageaccount.dfs.core.windows.net/
+
+storage_credentials:
+  - name: uc_sc
+    managed_identity: "/subscriptions/.../identities/databricks-mi"
+
+external_locations:
+  - name: raw_loc
+    credential: uc_sc
+    url: abfss://raw@storageaccount.dfs.core.windows.net/
+
+catalogs:
+  - name: raw
+    schemas: [landing, audit]
+  - name: bronze
+    schemas: [events, operational]
+  - name: silver
+    schemas: [curated]
+  - name: gold
+    schemas: [bi, ml]
+
+permissions:
+  - catalog: raw
+    group: data-engineers
+    privileges: ["SELECT", "WRITE"]
+  - catalog: gold
+    group: analysts
+    privileges: ["SELECT"]
